@@ -1,0 +1,6 @@
+#name : it '...' do ... end
+#group : definitions
+# --
+it "${1:some test}" do
+  $0
+end

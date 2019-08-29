@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: public ... get...() { return this... }
+# --
+public ${2:void} get${1:Attribute}() {
+$> return this.${1:$(downcase-first yas/text)};$0
+}

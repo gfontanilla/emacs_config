@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: listing
+# key: listing
+# --
+\begin{lstlisting}[style=mystyle, language=${1:Python}}
+$0
+\end{lstlisting}

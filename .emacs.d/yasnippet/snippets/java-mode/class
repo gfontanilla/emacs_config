@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: public class ... { public ...() {} }
+# --
+public class $1 {
+
+    public $1() {
+            	   
+    }
+    $0
+}

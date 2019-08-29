@@ -1,0 +1,97 @@
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1	localhost
+255.255.255.255	broadcasthost
+::1             localhost 
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 apps.zd-dev.com
+:: apps.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 assets.zd-dev.com
+:: assets.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 birdwatcher.zd-dev.com
+:: birdwatcher.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 canarytest.zd-dev.com
+:: canarytest.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 dev.zd-dev.com
+:: dev.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 developer.zd-dev.com
+:: developer.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 hercules.zd-dev.com
+:: hercules.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 localization.zd-dev.com
+:: localization.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 mobile-sdk-jwt.zd-dev.com
+:: mobile-sdk-jwt.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 mondocam.zd-dev.com
+:: mondocam.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 monitor.zd-dev.com
+:: monitor.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 projectinbox.zd-dev.com
+:: projectinbox.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 pubsub.zd-dev.com
+:: pubsub.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 samson.zd-dev.com
+:: samson.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 signup.zd-dev.com
+:: signup.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 support.zd-dev.com
+:: support.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 trial.zd-dev.com
+:: trial.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 twittercanary1.zd-dev.com
+:: twittercanary1.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 voicecanary1.zd-dev.com
+:: voicecanary1.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 volunteer.zd-dev.com
+:: volunteer.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 legion.zd-dev.com
+:: legion.zd-dev.com
+
+# ADDED BY DOCKER-IMAGES
+192.168.42.45 mysql.zd-dev.com
+:: mysql.zd-dev.com

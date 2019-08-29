@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: ugcon
+# --
+$>ultragrep -p "${1:subdomain}.zendesk.com" "${2:Controller}#${3:method}" -s 201${4:5}-${5:01}-${6:01} -e 201${7:5}-${8:01}-${9:01}$0

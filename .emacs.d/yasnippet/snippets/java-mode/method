@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: ... void ...() {...}
+# --
+${1:public} ${2:void} ${3:methodName}($4) {
+$> $0
+}

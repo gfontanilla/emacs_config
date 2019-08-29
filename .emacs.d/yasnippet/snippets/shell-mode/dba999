@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: dba999
+# --
+$>ssh -t bastion1.use1.zdsystest.com ssh -t admin1.pod999.use1.zdsystest.com ssh dbadmin${1:1}.pod999.use1.zdsystest.com$0

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: public void set...(... ...) { this... = ... }
+# --
+public void set${1:Attribute}(${2:void} ${1:$(downcase-first yas/text)}) {
+$>this.${1:$(downcase-first yas/text)} = ${1:$(downcase-first yas/text)};$0
+}

@@ -1,0 +1,6 @@
+#name : describe '...' do ... end
+#group : definitions
+# --
+describe "${1:some suite}" do
+  $0
+end

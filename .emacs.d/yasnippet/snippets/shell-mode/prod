@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: prod
+# --
+$>RAILS_ENV=production console_classic

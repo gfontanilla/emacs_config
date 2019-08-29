@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: pod2
+# --
+$>ssh -t admin${1:1}.sac1.zdsys.com ssh logs${2:1}.sac1.zdsys.com$0

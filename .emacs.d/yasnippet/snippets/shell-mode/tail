@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: tail
+# --
+$>ultragrep -t '${1:subdomain}.zendesk.com'

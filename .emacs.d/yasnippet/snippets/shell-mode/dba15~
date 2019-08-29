@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: dba14
+# --
+$>ssh -t admin${1:1}.pod14.use1.zdsys.com ssh -t logs${3:1}.pod14.use1.zdsys.com$0

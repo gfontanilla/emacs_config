@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: bynid
+# --
+$>zdig bynid ${1:notification-id} -v -i -s 201${2:5}-${3:01}-${4:01} -e 201${5:5}-${6:01}-${7:01}$0

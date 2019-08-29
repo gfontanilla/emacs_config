@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: dba3
+# --
+$>ssh -t admin${1:1}.dub1.zdsys.com ssh dbadmin${2:1}.pod3.dub1.zdsys.com$0

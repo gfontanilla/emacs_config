@@ -1,0 +1,6 @@
+#name : function template
+# --
+(defun $1 ($2)
+  "${3:The doc string.}"
+  (interactive)
+  $0)
