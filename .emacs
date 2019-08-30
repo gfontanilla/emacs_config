@@ -12,37 +12,37 @@
 (defun set-as-last-kbd-macro (macro &optional keys)
   "Sets the variable `last-kbd-macro' to the keyboard macro
 `MACRO'."
-  (interactive 
-   (list 
-    (intern 
+  (interactive
+   (list
+    (intern
      (completing-read "Enter kbd macro: "
-		      obarray
-		      (lambda (elt)
-			(and (fboundp elt)
-			     (or (stringp (symbol-function elt))
-				 (vectorp (symbol-function elt))
-				 (get elt 'kmacro))))
-		      t))
-	 current-prefix-arg))
+                      obarray
+                      (lambda (elt)
+                        (and (fboundp elt)
+                             (or (stringp (symbol-function elt))
+                                 (vectorp (symbol-function elt))
+                                 (get elt 'kmacro))))
+                      t))
+         current-prefix-arg))
   (set 'last-kbd-macro macro))
 
 (defun insert-org-meeting-header ()
   "Insert header in meeting file with the current date; asks for
 meeting name and place."
-  (interactive)  
-  (insert (concat "=== " 
-		  (trim-string (read-from-minibuffer "Meeting name: "))
-		  " -- " 
-		  (trim-string (shell-command-to-string "date +\"%B %e, %Y\"")) 
-		  " --- " 
-		  (trim-string (read-from-minibuffer "Meeting place: "))
-		  " ===")))
+  (interactive)
+  (insert (concat "=== "
+                  (trim-string (read-from-minibuffer "Meeting name: "))
+                  " -- "
+                  (trim-string (shell-command-to-string "date +\"%B %e, %Y\""))
+                  " --- "
+                  (trim-string (read-from-minibuffer "Meeting place: "))
+                  " ===")))
 
 (defun trim-string (string)
   "Remove white spaces in beginning and end of STRING. White space
 can be: space, tab, emacs newline (line feed, ASCII 10)."
-  (replace-regexp-in-string "\\`[ \t\n]*" "" 
-			    (replace-regexp-in-string "[ \t\n]*\\'" "" string)))
+  (replace-regexp-in-string "\\`[ \t\n]*" ""
+                            (replace-regexp-in-string "[ \t\n]*\\'" "" string)))
 
 (defun count-whatever-region (apply-func start end &optional unit)
   "Count number of words or sentences or anything in region specified
@@ -56,17 +56,17 @@ was not specified, use the term \"unit\"."
       (goto-char start)
       ;; Use the generic unit "units" if unspecified
       (if (eq unit nil)
-	  (setq unit "unit"))
+          (setq unit "unit"))
       (skipc)
       (while (< (point) end)
-	(apply (symbol-function apply-func) '(1))
-	(setq count (1+ count))
-	(skipc))
-      (message (concat 
-		(if (boundp 'whole-buffer)
-		    "Buffer"
-		  "Region") 
-		" contains %d %s(s).") count unit))))
+        (apply (symbol-function apply-func) '(1))
+        (setq count (1+ count))
+        (skipc))
+      (message (concat
+                (if (boundp 'whole-buffer)
+                    "Buffer"
+                  "Region")
+                " contains %d %s(s).") count unit))))
 
 (defun count-words-region (start end)
   "Count number of words in the region; print a message in the
@@ -107,7 +107,53 @@ This function relies on the function `count-sentences-region'."
   (interactive "DDirectory: ")
   (shell-command
    (format "cd %s; ctags --verbose -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f %s &"
-	   dir-name (concat dir-name "TAGS"))))
+           dir-name (concat dir-name "TAGS"))))
+
+;; Emacs 24 compatibility
+(defun process-live-p (process)
+  "Returns non-nil if PROCESS is alive.
+    A process is considered alive if its status is `run', `open',
+    `listen', `connect' or `stop'."
+  (memq (process-status process)
+        '(run open listen connect stop)))
+
+(defun show-file-name ()
+  "Show the full path file name in the minibuffer."
+  (interactive)
+  (message (buffer-file-name)))
+
+(defun func-region (start end func)
+  "Run a function over the region between START and END in current buffer."
+  (save-excursion
+    (let ((text (delete-and-extract-region start end)))
+      (insert (funcall func text)))))
+
+(defun url-encode-region (start end)
+  "URL encode the region between START and END in current buffer."
+  (interactive "r")
+  (func-region start end #'url-hexify-string))
+
+(defun url-decode-region (start end)
+  "URL decode the region between START and END in current buffer."
+  (interactive "r")
+  (func-region start end #'url-unhex-string))
+
+;; https://emacs.stackexchange.com/questions/33117/showing-bytes-as-hexadecimal-escapes-rather-than-octal-escapes
+(defun toggle-hex-octal ()
+  "Toggle display between hex and octal byte sequences."
+  (interactive)
+  (require 'cl-lib)
+  (if buffer-display-table
+      (setq buffer-display-table nil)
+    (progn
+      (setq buffer-display-table (make-display-table))
+      (setq unprintable (append (number-sequence 127 255) (number-sequence 0 8) (number-sequence 11 31)))
+      (cl-loop
+       for x in unprintable
+       do (aset buffer-display-table (unibyte-char-to-multibyte x)
+		(cl-map 'vector
+			(lambda (c) (make-glyph-code c 'escape-glyph))
+			(format "\\%02X" x)))))))
 
 ;; %%%%%%%%%% End of Emacs Lisp functions %%%%%%%%%%
 
@@ -132,9 +178,9 @@ This function relies on the function `count-sentences-region'."
 (require 'auto-complete-config)
 (ac-config-default)
 (add-hook 'emacs-lisp-mode-hook (lambda ()
-				  (ac-emacs-lisp-mode-setup)
-				  (auto-complete-mode t)
-				  ))
+                                  (ac-emacs-lisp-mode-setup)
+                                  (auto-complete-mode t)
+                                  ))
 (add-to-list `ac-modes `ruby-mode)
 
 ;; ============================================================
@@ -163,7 +209,7 @@ This function relies on the function `count-sentences-region'."
 (setq org-default-notes-file (concat org-directory "/notes.org"))
 (define-key global-map "\C-cr" `org-remember)
 
-(defun org-open-default-notes-file () 
+(defun org-open-default-notes-file ()
   "Opens the default notes file."
   (interactive)
   (find-file org-default-notes-file))
@@ -176,12 +222,12 @@ This function relies on the function `count-sentences-region'."
 
 (add-to-list 'load-path "~/.emacs.d/ace-jump-mode/")
 (autoload 'ace-jump-mode "ace-jump-mode" "Emacs quick move minor mode" t)
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+(define-key global-map (kbd "C-; SPC") 'ace-jump-mode)
 
 (autoload 'ace-jump-mode-pop-mark "ace-jump-mode" "Ace jump back:-)" t)
-(eval-after-load "ace-jump-mode"  
+(eval-after-load "ace-jump-mode"
   '(ace-jump-mode-enable-mark-sync))
-(define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
+(define-key global-map (kbd "C-; DEL") 'ace-jump-mode-pop-mark)
 
 ;; ============================================================
 ;; Enable flex-matching for ido-mode
@@ -218,8 +264,13 @@ This function relies on the function `count-sentences-region'."
 (add-to-list 'load-path "~/.emacs.d/magit/")
 (require 'magit)
 
+(global-set-key (kbd "C-x g") 'magit-status)
+
 ;; Prevent `magit-auto-revert-mode warning from showing up
 (setq magit-last-seen-setup-instructions "1.4.0")
+
+;; Possibly prevent "Error in post-command-hook"
+;; (setq magit-auto-revert-mode nil)
 
 ;; ============================================================
 ;; Enable yasnippet
@@ -340,8 +391,32 @@ This function relies on the function `count-sentences-region'."
 ;(require 'w3m)
 
 ;; ============================================================
+;; Enable git-gutter
+;; ============================================================
+;; (load "~/.emacs.d/emacs-git-gutter/git-gutter.el")
+;; (global-git-gutter-mode +1)
+
+;; ============================================================
+;; Set js indent level
+;; ============================================================
+
+(setq js-indent-level 2)
+
+;; ============================================================
+;; Enable visible bell notification
+;; ============================================================
+
+(setq visible-bell nil)
+
+;; ============================================================
+;; Enable hex quoted input (C-q HEX)
+;; ============================================================
+
+(setq read-quoted-char-radix 16)
+
+;; ============================================================
 ;; Set frame size
 ;; ============================================================
 
-(if (window-system) 
+(if (window-system)
     (set-frame-size (selected-frame) 92 52))
