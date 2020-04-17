@@ -151,11 +151,32 @@ This function relies on the function `count-sentences-region'."
       (cl-loop
        for x in unprintable
        do (aset buffer-display-table (unibyte-char-to-multibyte x)
-		(cl-map 'vector
-			(lambda (c) (make-glyph-code c 'escape-glyph))
-			(format "\\%02X" x)))))))
+                (cl-map 'vector
+                        (lambda (c) (make-glyph-code c 'escape-glyph))
+                        (format "\\%02X" x)))))))
+
+(defun squash ()
+  "Squash the active region (or the entire buffer if no active region) into one line."
+  (interactive)
+  (if (use-region-p)
+      (let ((rgn-bgn (funcall (lambda (a b) (if (< a b) a b)) (region-beginning) (region-end)))
+            (rgn-end (funcall (lambda (a b) (if (> a b) a b)) (region-beginning) (region-end))))
+        (goto-char rgn-end)
+        (while (> (point) rgn-bgn)
+          (delete-indentation)))
+    (progn
+      (goto-char (buffer-end 1))
+      (while (> (point) (buffer-end -1))
+        (delete-indentation)))))
 
 ;; %%%%%%%%%% End of Emacs Lisp functions %%%%%%%%%%
+
+;; %%%%%%%%%% Start of kbd macro defs  %%%%%%%%%%
+
+(fset 'monitor-extract
+   [?\M-m ?\M-d ?\M-d ?\C-d ?\C-d ?\M-f ?s ?: ?: ?\C-s ?k ?e ?n ?n ?e ?l ?_ ?i ?d ?\C-m ?\C-s ?\" ?\C-m ?\C-  ?\C-s ?\" ?\C-b ?\M-w ?\C-r ?M ?o ?n ?i ?t ?o ?r ?s ?: ?: ?\C-m ?\M-f ?\C-f ?\C-f ?\C-y ?\C-c ?i ?\C-c ?i ?\C-c ?i ?\C-s ?s ?e ?l ?f ?, ?\C-m ?\C-x ?o ?\C-x ?\C-f ?\C-f ?\C-y ?\C-c ?i ?. ?r ?b return ?m ?c tab tab ?\C-n ?\C-h ?\C-h ?\C-h ?\C-h ?\C-h ?\C-h ?\C-h ?\C-h ?\C-h ?\C-p ?\C-x ?o ?\C-  ?\C-s ?\) ?, ?\C-p ?\C-e ?\C-w ?\C-n ?\M-^ ?\M-^ ?\M-f ?\C-f ?\C-h ?\C-x ?o ?\C-y ?\C-  ?\C-r ?d ?e ?f ?a ?u ?l ?t ?s ?\( ?\C-n ?\C-a ?\M-x ?d ?e ?c ?r ?e ?a ?s ?e ?- ?l ?e ?f ?t tab return ?\C-h ?\M-< ?\C-  ?\M-> ?\M-x ?w ?h ?i ?t ?e ?s ?p ?a ?c ?e ?- ?c ?l ?e ?a ?n ?u ?p return ?\C-x ?\C-s ?\C-x ?o ?\C-x ?\C-s ?\C-n ?\M-m])
+
+;; %%%%%%%%%% End of of kbd macro defs  %%%%%%%%%%
 
 ;; ============================================================
 ;; Keyboard mapping
@@ -382,6 +403,14 @@ This function relies on the function `count-sentences-region'."
 
 (add-to-list 'ac-modes 'shell-mode)
 (add-hook 'shell-mode-hook 'ac-rlc-setup-sources)
+
+;; ============================================================
+;; Enable string-inflection
+;; ============================================================
+
+(load "~/.emacs.d/string-inflection/string-inflection.el")
+(require `string-inflection)
+(global-set-key (kbd "C-c i") 'string-inflection-cycle)
 
 ;; ============================================================
 ;; Enable w3

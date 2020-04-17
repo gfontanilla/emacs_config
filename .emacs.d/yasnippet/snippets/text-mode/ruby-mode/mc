@@ -1,0 +1,12 @@
+#name : module self class << self ... end end
+#group : definitions
+# --
+# frozen_string_literal: true
+
+module Monitors
+  class ${`(funcall (lambda (self inf a b) (funcall self inf a b self)) (lambda (inf a b self) (if (> b 0) (funcall self inf (funcall inf a) (- b 1) self) a)) 'string-inflection-ruby-style-cycle-function (file-name-nondirectory (file-name-sans-extension (buffer-file-name))) 2)`} < Kennel::Models::Monitor
+    defaults(
+      $0
+    )
+  end
+end
